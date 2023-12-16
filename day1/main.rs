@@ -1,7 +1,8 @@
 use std::{collections::HashMap, fs};
 
 fn main() {
-    let contents = fs::read_to_string("./input.txt").expect("something went wrong");
+    let contents =
+        fs::read_to_string("./day1/input.txt").expect("something went wrong");
     // fn_1(contents.clone());
     fn_2(contents.clone());
 }
