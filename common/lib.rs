@@ -1,0 +1,10 @@
+use std::fs;
+
+pub fn get_inputs() -> (String, String) {
+    let input =
+        fs::read_to_string("./input.txt").expect("something went wrong");
+    let input2 =
+        fs::read_to_string("./input2.txt").expect("something went wrong");
+
+    (input, input2)
+}
