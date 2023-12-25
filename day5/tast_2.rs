@@ -1,4 +1,4 @@
-use crate::helper::{get_mapped_value, get_ranges};
+use crate::helper::{get_mapped_ranges, get_ranges};
 
 pub fn task_2(input: String) -> u64 {
     let mut lines = input.lines();
@@ -21,22 +21,21 @@ pub fn task_2(input: String) -> u64 {
     let (lines, temperature_to_humidity) = get_ranges(lines);
     let (_, humidity_to_location) = get_ranges(lines);
 
-    ranges
-        .flat_map(|f| {
-            f.map(|v| {
-                let mut val = v;
-                val = get_mapped_value(val, &seed_to_soil);
-                val = get_mapped_value(val, &soil_to_fertilizer);
-                val = get_mapped_value(val, &fertilizer_to_water);
-                val = get_mapped_value(val, &water_to_light);
-                val = get_mapped_value(val, &light_to_temperature);
-                val = get_mapped_value(val, &temperature_to_humidity);
-                val = get_mapped_value(val, &humidity_to_location);
-                val
-            })
-        })
-        .min()
-        .unwrap_or(0)
+    let mut mapped_ranges: Vec<_> = ranges.collect();
+
+    mapped_ranges = get_mapped_ranges(mapped_ranges, &seed_to_soil);
+    mapped_ranges = get_mapped_ranges(mapped_ranges, &soil_to_fertilizer);
+    mapped_ranges = get_mapped_ranges(mapped_ranges, &fertilizer_to_water);
+    mapped_ranges = get_mapped_ranges(mapped_ranges, &water_to_light);
+    mapped_ranges = get_mapped_ranges(mapped_ranges, &light_to_temperature);
+    mapped_ranges = get_mapped_ranges(mapped_ranges, &temperature_to_humidity);
+    mapped_ranges = get_mapped_ranges(mapped_ranges, &humidity_to_location);
+
+    mapped_ranges
+        .iter()
+        .min_by(|a, b| a.start.cmp(&b.start))
+        .unwrap()
+        .start
 }
 
 #[cfg(test)]
@@ -52,6 +51,7 @@ mod tests {
         println!("result{}", res);
 
         let res = task_2(input2);
+        assert!(res == 125742456);
         println!("result{}", res);
     }
 }
