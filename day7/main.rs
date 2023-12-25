@@ -1,6 +1,8 @@
 mod helper;
 mod task_1;
 mod tast_2;
+mod task_1_helpers;
+mod task_2_helpers;
 use common::get_inputs;
 use task_1::task_1;
 use tast_2::task_2;

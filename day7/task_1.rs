@@ -1,4 +1,4 @@
-use crate::helper::{group_hands, parse_input_lines};
+use crate::{helper::parse_input_lines, task_1_helpers::group_hands};
 
 pub fn task_1(input: String) -> u64 {
     let lines: Vec<_> = input.lines().collect();
@@ -6,7 +6,7 @@ pub fn task_1(input: String) -> u64 {
     let hands = parse_input_lines(&lines);
     let mut grouped_hands = group_hands(&hands);
 
-    grouped_hands.sort_grouped_hands();
+    grouped_hands.sort_grouped_hands(false);
     grouped_hands.calculate_result(lines.len() as u64)
 }
 
