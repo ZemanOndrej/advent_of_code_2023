@@ -28,3 +28,24 @@ pub fn parse_input(
     });
     (instructions, network)
 }
+pub fn count_steps(
+    instructions: &Vec<String>,
+    network: &HashMap<String, (String, String)>,
+    start: &str,
+    is_end: &dyn Fn(&str) -> bool,
+) -> u64 {
+    let mut current = start;
+    let mut step_counter = 0;
+    while !is_end(current) {
+        for instruction in instructions {
+            let (left, right) = network.get(current).unwrap();
+            step_counter += 1;
+            match instruction.as_str() {
+                "R" => current = right,
+                "L" => current = left,
+                _ => {}
+            }
+        }
+    }
+    step_counter
+}

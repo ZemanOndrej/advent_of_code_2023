@@ -1,22 +1,12 @@
-use crate::helper::parse_input;
+use crate::helper::{parse_input, count_steps};
 const END: &str = "ZZZ";
 const START: &str = "AAA";
 pub fn task_1(input: String) -> u64 {
     let (instructions, network) = parse_input(input);
-    let mut current = START;
-    let mut step_counter = 0;
-    while current != END {
-        for instruction in &instructions {
-            let (left, right) = network.get(current).unwrap();
-            step_counter += 1;
-            match instruction.as_str() {
-                "R" => current = right,
-                "L" => current = left,
-                _ => {}
-            }
-        }
-    }
-    step_counter
+    count_steps(&instructions, &network, START, &is_end)
+}
+fn is_end(current: &str) -> bool {
+	current == END
 }
 
 #[cfg(test)]
