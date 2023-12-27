@@ -33,7 +33,6 @@ pub fn task_1(input: String) -> i64 {
             println!("predicted_history = {:?}", predicted_history);
         }
 		res +=predicted_history;
-        // println!("predicted_history = {:?}", predicted_history);
     }
     res.into()
 }
