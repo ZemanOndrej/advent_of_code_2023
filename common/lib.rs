@@ -8,3 +8,6 @@ pub fn get_inputs() -> (String, String) {
 
     (input, input2)
 }
+pub fn get_custom_input(file_name: &str) -> String {
+	fs::read_to_string(file_name).expect("something went wrong")
+}

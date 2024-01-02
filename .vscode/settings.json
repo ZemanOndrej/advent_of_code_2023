@@ -6,4 +6,9 @@
 	"**/.DS_Store": true,
 	"**/Thumbs.db": true,
 	"**/target": true,
-}}
+},
+"lldb.displayFormat": "auto",
+"lldb.showDisassembly": "never",
+"lldb.dereferencePointers": true,
+"lldb.consoleMode": "commands"
+}
