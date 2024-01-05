@@ -12,7 +12,7 @@ pub fn clean_input(
                 .enumerate()
                 .map(|(j, val)| {
                     if loop_points.contains(&(i, j)) {
-                        return val.clone();
+                        val.clone()
                     } else {
                         '.'
                     }
