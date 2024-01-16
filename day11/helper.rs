@@ -28,3 +28,38 @@ pub fn print_space(parsed_input: &Vec<Vec<char>>) {
         println!()
     }
 }
+
+pub fn calculate_dist(
+    (x1, y1): &(usize, usize),
+    (x2, y2): &(usize, usize),
+) -> u64 {
+    let x_diff = x1.abs_diff(*x2);
+    let y_diff = y1.abs_diff(*y2);
+    x_diff as u64 + y_diff as u64
+}
+
+pub fn get_empty_rows_cols(space: &Vec<Vec<char>>) -> (Vec<usize>, Vec<usize>) {
+    let mut empty_rows = vec![];
+    let mut empty_cols: Vec<_> = vec![false; space.len()];
+
+    for (i, line) in space.iter().enumerate() {
+        if !line.contains(&'#') {
+            empty_rows.push(i);
+        }
+
+        for (j, _) in line.iter().enumerate() {
+            if space[i][j] == '#' {
+                empty_cols[j] = true;
+            }
+        }
+    }
+
+    (
+        empty_rows,
+        empty_cols
+            .iter()
+            .enumerate()
+            .filter_map(|(i, v)| if !*v { Some(i) } else { None })
+            .collect(),
+    )
+}
