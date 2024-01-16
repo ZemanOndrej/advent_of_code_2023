@@ -12,11 +12,11 @@ pub fn task_1(input: String) -> u64 {
     print_space(&parsed_input);
 
     let planets = get_planet_locations(parsed_input);
-    let distances = compute_distances_between_all(planets);
+    let distances = compute_distances_between_all(&planets);
     distances.iter().sum()
 }
 
-fn compute_distances_between_all(planets: Vec<(usize, usize)>) -> Vec<u64> {
+fn compute_distances_between_all(planets: &Vec<(usize, usize)>) -> Vec<u64> {
     let mut distances = vec![];
     for i in 0..planets.len() {
         let p1 = planets.get(i).unwrap();
@@ -34,8 +34,8 @@ fn add_empty_rows(
     empty_rows_cols: &(Vec<usize>, Vec<usize>),
 ) {
     let col_count = parsed_input.get(0).unwrap().len();
-    for row in empty_rows_cols.0.iter() {
-        parsed_input.insert(row + 1, vec!['.'; col_count]);
+    for (i, row) in empty_rows_cols.0.iter().enumerate() {
+        parsed_input.insert(row + 1 + i, vec!['.'; col_count]);
     }
 }
 
@@ -51,8 +51,8 @@ fn add_empty_columns(
 }
 
 fn calculate_dist((x1, y1): &(usize, usize), (x2, y2): &(usize, usize)) -> u64 {
-    let x_diff = if x1 > x2 { x1 - x2 } else { x2 - x1 };
-    let y_diff = if y1 > y2 { y1 - y2 } else { y2 - y1 };
+    let x_diff = x1.abs_diff(*x2);
+    let y_diff = y1.abs_diff(*y2);
     x_diff as u64 + y_diff as u64
 }
 
@@ -95,7 +95,78 @@ mod tests {
         assert!(res == 374);
 
         let res = task_1(input2);
-        // assert!(res == 23147);
+        assert!(res == 9608724);
         println!("result input 2 = {}", res);
+    }
+
+    #[test]
+    fn test_3_planets() {
+        let input = String::from(
+            "###
+...
+...",
+        );
+        let res = task_1(input);
+        assert!(res == 4);
+    }
+
+    #[test]
+    fn test_task_1_2_planets() {
+        let input = String::from(
+            "##.
+...
+...",
+        );
+        let res = task_1(input);
+        assert!(res == 1);
+        let input = String::from(
+            "#.#
+...
+...",
+        );
+        let res = task_1(input);
+        assert!(res == 3);
+        let input = String::from(
+            "#..
+#..
+...",
+        );
+        let res = task_1(input);
+        assert!(res == 1);
+        let input = String::from(
+            "#..
+.#.
+...",
+        );
+        let res = task_1(input);
+        assert!(res == 2);
+        let input = String::from(
+            "#..
+..#
+...",
+        );
+        let res = task_1(input);
+        assert!(res == 4);
+        let input = String::from(
+            "#..
+...
+#..",
+        );
+        let res = task_1(input);
+        assert!(res == 3);
+        let input = String::from(
+            "#..
+...
+.#.",
+        );
+        let res = task_1(input);
+        assert!(res == 4);
+        let input = String::from(
+            "#..
+...
+..#",
+        );
+        let res = task_1(input);
+        assert!(res == 6);
     }
 }
